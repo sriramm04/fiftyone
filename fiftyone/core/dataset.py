@@ -7079,6 +7079,96 @@ class Dataset(foc.SampleCollection, metaclass=DatasetSingleton):
         return dataset
 
     @classmethod
+    def from_image_urls(
+        cls,
+        urls,
+        sample_parser=None,
+        name=None,
+        persistent=False,
+        overwrite=False,
+        tags=None,
+        progress=None,
+    ):
+        """
+        Creates a :class:`Dataset` from the given list of image URLs.
+
+        Args:
+            urls: an iterable of image URLs
+            sample_parser (None): a
+                :class:`fiftyone.utils.data.parsers.UnlabeledImageSampleParser`
+                instance to use to parse the samples. If None, uses the default parser.
+            name (None): a name for the dataset. By default,
+                :func:`get_default_dataset_name` is used
+            persistent (False): whether the dataset should persist in the
+                database after the session terminates
+            overwrite (False): whether to overwrite an existing dataset of
+                the same name
+            tags (None): an optional tag or iterable of tags to attach to each
+                sample
+            progress (None): whether to render a progress bar (True/False), use
+                the default value ``fiftyone.config.show_progress_bars``
+                (None), or a progress callback function to invoke instead
+
+        Returns:
+            a :class:`Dataset`
+        """
+        dataset = cls(name, persistent=persistent, overwrite=overwrite)
+        if sample_parser is None:
+            sample_parser = foud.ImageSampleParser()
+        dataset.add_images(
+            urls,
+            sample_parser=sample_parser,
+            tags=tags,
+            progress=progress,
+        )
+        return dataset
+    
+    @classmethod
+    def from_image_urls(
+        cls,
+        urls,
+        sample_parser=None,
+        name=None,
+        persistent=False,
+        overwrite=False,
+        tags=None,
+        progress=None,
+    ):
+        """
+        Creates a :class:`Dataset` from the given list of image URLs.
+
+        Args:
+            urls: an iterable of image URLs
+            sample_parser (None): a
+                :class:`fiftyone.utils.data.parsers.UnlabeledImageSampleParser`
+                instance to use to parse the samples. If None, uses the default parser.
+            name (None): a name for the dataset. By default,
+                :func:`get_default_dataset_name` is used
+            persistent (False): whether the dataset should persist in the
+                database after the session terminates
+            overwrite (False): whether to overwrite an existing dataset of
+                the same name
+            tags (None): an optional tag or iterable of tags to attach to each
+                sample
+            progress (None): whether to render a progress bar (True/False), use
+                the default value ``fiftyone.config.show_progress_bars``
+                (None), or a progress callback function to invoke instead
+
+        Returns:
+            a :class:`Dataset`
+        """
+        dataset = cls(name, persistent=persistent, overwrite=overwrite)
+        if sample_parser is None:
+            sample_parser = foud.ImageSampleParser()
+        dataset.add_images(
+            urls,
+            sample_parser=sample_parser,
+            tags=tags,
+            progress=progress,
+        )
+        return dataset
+        
+    @classmethod
     def from_archive(
         cls,
         archive_path,
